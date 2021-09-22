@@ -1,0 +1,38 @@
+version: '2'
+services:
+  app:
+    build:
+      context: .
+      dockerfile: ./docker/rails/Dockerfile
+    # command: bash -c "rm -f tmp/pids/server.pid && ./bin/server"
+    command: bash -c "rm -f tmp/pids/server.pid && bundle exec puma -C config/puma.rb"
+    # command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
+    stdin_open: true
+    tty: true
+    ports:
+      - '5000:5000'
+      - '3035:3035'
+    env_file: production.env
+    environment:
+      RAILS_ENV: production
+      NODE_ENV: production
+      TZ: Asia/Tokyo
+    volumes:
+      - .:/app
+      - /var/tmp
+      - sockets:/app/tmp/sockets
+    tty: true
+  nginx:
+    build:
+      context: .
+      dockerfile: ./docker/nginx/Dockerfile
+    ports:
+      - '80:80'
+    volumes:
+      - sockets:/app/tmp/sockets
+    depends_on:
+      - app
+
+volumes:
+  db_data:
+  sockets:
