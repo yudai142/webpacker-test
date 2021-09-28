@@ -4,13 +4,14 @@ services:
     build:
       context: .
       dockerfile: ./docker/rails/Dockerfile_development
-    # command: bash -c "rm -f tmp/pids/server.pid && ./bin/server"
-    command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3035 -b '0.0.0.0'"
+    command: bash -c "rm -f tmp/pids/server.pid && ./bin/webpack-dev-server"
+    # command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 5000 -b '0.0.0.0'"
     stdin_open: true
     tty: true
     ports:
-      - '5000:5000'
+      # - '5000:5000'
       - '3035:3035'
+      # - '3000:3000'
     env_file: production.env
     environment:
       RAILS_ENV: development

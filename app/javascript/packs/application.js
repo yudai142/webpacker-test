@@ -8,6 +8,9 @@ import Turbolinks from "turbolinks"
 import * as ActiveStorage from "@rails/activestorage"
 import "channels"
 
+import '../javascripts/hello_webpacker'
+import '../stylesheets/hello_webpacker'
+
 Rails.start()
 Turbolinks.start()
 ActiveStorage.start()
